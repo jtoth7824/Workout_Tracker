@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { TIME } = require("sequelize/types");
+//const { TIME } = require("sequelize/types");
 const Schema = mongoose.Schema;
 
 const ExerciseSchema = new Schema({

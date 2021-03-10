@@ -21,6 +21,7 @@ async function initExercise() {
   let workout;
 
   if (location.search.split("=")[1] === undefined) {
+    console.log("before createWorkout")
     workout = await API.createWorkout()
     console.log(workout)
   }
@@ -90,6 +91,10 @@ function validateInputs() {
     completeButton.removeAttribute("disabled");
     addButton.removeAttribute("disabled");
   } else {
+    console.log("isValid = " + isValid);
+    console.log(cardioNameInput.value);
+    console.log(durationInput);
+    console.log(distanceInput);
     completeButton.setAttribute("disabled", true);
     addButton.setAttribute("disabled", true);
   }
