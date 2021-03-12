@@ -7,13 +7,13 @@ module.exports = (app) => {
 
   // index route loads index.html
   app.get('/exercise', (req, res) => {
-    console.log("in html route");
+    console.log("in exercise html route");
     res.sendFile(path.join(__dirname, '../public/exercise.html'))
     }
   );
 
   app.get('/stats', (req, res) => {
-    console.log("in html route");
+    console.log("in stats html route");
     res.sendFile(path.join(__dirname, '../public/stats.html'))
     }
   );

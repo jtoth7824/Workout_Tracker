@@ -25,12 +25,14 @@ console.log(data);
     return json;
   },
   async createWorkout(data = {}) {
+    console.log(data);
+    console.log(JSON.stringify(data));
     const res = await fetch("/api/workouts", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
     });
-
+console.log("after the fetch");
     const json = await res.json();
 
     return json;
