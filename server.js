@@ -100,7 +100,11 @@ console.log(req.params.id);
 console.log(req.body);
 //  db.Exercise.create(req.body)
     db.WorkoutPlan.findOneAndUpdate({_id: req.params.id}, {$push: {exercises: req.body}}, {new: true})
-//    .then(({ _id }) => db.WorkoutPlan.findOneAndUpdate({_id: req.params.id}, { $push: { exercises: _id } }, { new: true }))
+    // .aggregate({
+    //     $addFields: {
+    //         totalDuration: {$sum: "$exercises.duration"}
+    //     }
+    // })
     .then(dbUser => {
       console.log(dbUser);
       res.json(dbUser);
@@ -111,45 +115,12 @@ console.log(req.body);
     });
 });
 
-//get workouts in range
-/* app.get("/api/workouts/range", (req, res) => {
-  db.WorkoutPlan.find({})
-    .populate({
-    path: "WorkoutPlan",
-      options: {
-       limit: 3
-      }
-    })
-    /*     .aggregate([{
-          $addFields: {
-            totalDuration: {
-              $sum: "$exercises.duration"
-            }
-          }
-        }]) */
-/*     .then(dbWorkoutPlan => {
-      console.log(dbWorkoutPlan);
-      res.json(dbWorkoutPlan);
-    });
-});  */
-
 
 app.get("/api/workouts/range", (req, res) => {
       db.WorkoutPlan.aggregate([
-          // {
-          //   "$unwind": "$exercises"
-          // },
-          // {
-          //   "$lookup": {
-          //     "from": "exercises",
-          //     "localField": "exercises",
-          //     "foreignField": "_id",
-          //     "as": "exercises_joined"
-          //   }
-          // },
-          // {
-          //   "$unwind": "$exercises_joined"
-          // },
+          {
+            "$sort": {day: -1}
+          },
           {
             "$limit": 7
           },
@@ -158,16 +129,12 @@ app.get("/api/workouts/range", (req, res) => {
                 totalDuration: {$sum: "$exercises.duration"}
             }
           },
-/*          {
-            "$group": {
-              "_id": "$exercises_joined.duration",
-              "totalDuration": {
-                "$sum": "$exercises_joined.duration"
-              }
-            }
-          } */
+          {
+            "$sort": {day: 1}
+          },
         ], (err, result) => {
           if (err) {
+            console.log(err);
             res.send(err);
           } else {
             console.log(result);
@@ -176,16 +143,6 @@ app.get("/api/workouts/range", (req, res) => {
         })
 })
 
-
-/*  app.get("/api/workouts/range", (req, res) => {
-      db.WorkoutPlan.find({}).populate("exercises").limit(5).exec((err, docs) => {
-        if (err) { return console.error(err); }
-        console.log(`array has ${docs.length} docs.`);
-        console.log(docs);
-        console.log("return docs");
-        res.json(docs);
-      });
-    }) */
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);

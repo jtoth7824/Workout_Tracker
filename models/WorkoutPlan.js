@@ -2,13 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const WorkoutPlanSchema = new Schema({
-/*   name: {
-    type: String,
-    unique: true
-  }, */
-  exercises: [
-    {
+const subSchema = mongoose.Schema({
 //      type: Schema.Types.ObjectId,
 //      ref: "Exercise"
       type: {
@@ -31,12 +25,18 @@ const WorkoutPlanSchema = new Schema({
       },
       distance: {
         type: Number
-      },
-    }
-  ],
+      }
+    },
+    {_id : false})
+
+
+const WorkoutPlanSchema = new Schema({
+  exercises: [subSchema],
   day: {
     type: Date,
 //    default: Date.now
+//    default: new Date(new Date().setDate(new Date().getDate()))
+    default: new Date().setDate(new Date().getDate())
   },
 });
 
