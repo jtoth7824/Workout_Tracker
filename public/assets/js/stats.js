@@ -26,6 +26,8 @@ function populateChart(data) {
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
   const colors = generatePalette();
+  // new functions to calculate values for pie & donut charts
+  // Trilogy starter code did not work correctly for these charts
   let indD = individualDurations(data, workouts);
   let indW = calculateIndivWeight(data, workouts);
 
@@ -134,7 +136,6 @@ function populateChart(data) {
         label: 'Exercises Performed',
         backgroundColor: colors,
         data: indD
-//        data: durations,
       }, ],
     },
     options: {
@@ -153,7 +154,6 @@ function populateChart(data) {
         label: 'Exercises Performed',
         backgroundColor: colors,
         data: indW,
-        //          data: pounds,
       }, ],
     },
     options: {
@@ -166,44 +166,66 @@ function populateChart(data) {
 }
 
 
-
+// function to calculate the durations of each exercise while removing duplicate exercises
+// this function was needed because pumping "durations" directly into pie chart did not work
+// in the starter code.   This function successfully aggregates the values so pie chart displays
+// correctly.
 function individualDurations(data, names) {
   let durations = [];
 
   var newname;
+  // loop over each de-duped exercise name
   names.forEach((exname) => {
     var sum = 0;
+    // save off the name of exercise
     newname = exname;
+    //  loop over each workout
     data.forEach((workout) => {
+      // loop over each exercise in the workout
       workout.exercises.forEach((exercise) => {
+        // check if exercise matches name of exercise in outer loop (de-duped names)
         if (newname == exercise.name) {
+          // if exercise name found, then keep running sum of the duration for exercise name
           sum = sum + exercise.duration;
         }
       })
     })
+    // push the total duration value per the exercise name to array
     durations.push(sum);
   })
 
+  // return the durations array
 return durations;
 }
 
+// function to calculate the weights of each exercise while removing duplicate exercises
+// this function was needed because pumping "weights" directly into donut chart did not work
+// in the starter code.  This function successfully aggregates the values so donut chart displays
+// correctly.
 function calculateIndivWeight(data, names) {
   let total = [];
 
   var newname;
+  // loop over each de-duped exercise name
   names.forEach((exname) => {
     var sum = 0;
+    // save off the name of exercise
     newname = exname;
+    // loop over each workout
     data.forEach((workout) => {
+      // loop over each exercise in the workout
       workout.exercises.forEach((exercise) => {
+        // check if exercise matches name of exercise in outer loop (de-duped name)
         if (newname == exercise.name) {
+          // if exercise name found, then keep running sum of the weights for exercise name
           sum = sum + exercise.weight;
         }
       })
     })
+    // push the total weight vaue per the exercise name to array
     total.push(sum);
   })
-
+  // return the total weights array
   return total;
 }
 

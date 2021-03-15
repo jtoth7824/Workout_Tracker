@@ -25,6 +25,7 @@ const subSchema = mongoose.Schema({
         type: Number
       }
     },
+    // do not add an id field automatically to exercise array
     {_id : false})
 
 

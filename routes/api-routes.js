@@ -32,7 +32,6 @@ module.exports = (app) => {
         // return err if one occurs
         res.send(err);
       } else {
-        console.log(result);
         // return json result set
         res.json(result);
       }
@@ -41,11 +40,9 @@ module.exports = (app) => {
 
   // retrieve exercises
   app.get("/api/workouts", (req, res) => {
-    console.log("in get exercise");
     // find all exercises
     db.Exercise.find({})
       .then(dbExercise => {
-        console.log("in get exercise");
         // return json result set
         res.json(dbExercise);
       })
@@ -58,11 +55,9 @@ module.exports = (app) => {
 
   // create workout
   app.post("/api/workouts", (body, res) => {
-    console.log("add workout");
     // create new workout plan
     db.WorkoutPlan.create(body)
       .then(dbWorkoutPlan => {
-        console.log('in create workout');
         // return json result set
         res.json(dbWorkoutPlan);
       })
@@ -75,8 +70,6 @@ module.exports = (app) => {
 
   // save new exercise per correct workout
   app.put("/api/workouts/:id", (req, res) => {
-    console.log(req.params.id);
-    console.log(req.body);
     // find workout based upon ID and then update with new exercise information
     db.WorkoutPlan.findOneAndUpdate({
         _id: req.params.id
@@ -89,7 +82,6 @@ module.exports = (app) => {
         new: true
       })
       .then(dbUser => {
-        console.log(dbUser);
         // return json result set
         res.json(dbUser);
       })
@@ -131,7 +123,6 @@ module.exports = (app) => {
           // return error if one occurs
           res.send(err);
         } else {
-          console.log(result);
           // return json result set
           res.json(result);
         }

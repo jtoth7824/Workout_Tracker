@@ -22,7 +22,6 @@ async function initExercise() {
 
   if (location.search.split("=")[1] === undefined) {
     workout = await API.createWorkout()
-    console.log(workout);
   }
   if (workout) {
     location.search = "?id=" + workout._id;
@@ -147,7 +146,7 @@ if (completeButton) {
     toast.classList.add("success");
     //the following was removed because it was causing an empty record
     // to be written to db due to Add exercise button clearing input fields
-    // so unless user added info again, the button did create exercise
+    // so unless user added info again, the button did create exercise with empty fields
 //    handleFormSubmit(event);
   });
 }

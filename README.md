@@ -65,6 +65,7 @@ Followed by entering localhost:3000 in your browser URL line.
 * Node.js
 * Heroku
 * Atlas
+* morgan
 
 ## Repository
 
