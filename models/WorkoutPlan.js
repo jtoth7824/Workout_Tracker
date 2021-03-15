@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const subSchema = mongoose.Schema({
-//      type: Schema.Types.ObjectId,
-//      ref: "Exercise"
       type: {
         type: String,
       },
@@ -34,8 +32,6 @@ const WorkoutPlanSchema = new Schema({
   exercises: [subSchema],
   day: {
     type: Date,
-//    default: Date.now
-//    default: new Date(new Date().setDate(new Date().getDate()))
     default: new Date().setDate(new Date().getDate())
   },
 });

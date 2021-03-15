@@ -22,10 +22,20 @@ function generatePalette() {
 }
 
 function populateChart(data) {
-  let durations = data.map(({ totalDuration }) => totalDuration);
+  console.log(data);
+  let durations = data.map(({
+    totalDuration
+  }) => totalDuration);
+  console.log(durations);
   let pounds = calculateTotalWeight(data);
+  console.log("pounds = " + pounds);
   let workouts = workoutNames(data);
+  console.log("workouts = " + workouts);
   const colors = generatePalette();
+  let indD = individualDurations(data);
+  let indW = calculateIndivWeight(data, workouts);
+  console.log("indD = " + indD);
+  console.log("indW = " + indW);
 
   let line = document.querySelector('#canvas').getContext('2d');
   let bar = document.querySelector('#canvas2').getContext('2d');
@@ -42,7 +52,9 @@ function populateChart(data) {
     'Saturday',
   ];
 
-  const labels = data.map(({ day }) => {
+  const labels = data.map(({
+    day
+  }) => {
     const date = new Date(day);
     return daysOfWeek[date.getDay()];
   });
@@ -51,15 +63,13 @@ function populateChart(data) {
     type: 'line',
     data: {
       labels,
-      datasets: [
-        {
-          label: 'Workout Duration In Minutes',
-          backgroundColor: 'red',
-          borderColor: 'red',
-          data: durations,
-          fill: false,
-        },
-      ],
+      datasets: [{
+        label: 'Workout Duration In Minutes',
+        backgroundColor: 'red',
+        borderColor: 'red',
+        data: durations,
+        fill: false,
+      }, ],
     },
     options: {
       responsive: true,
@@ -67,22 +77,18 @@ function populateChart(data) {
         display: true,
       },
       scales: {
-        xAxes: [
-          {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
             display: true,
-            scaleLabel: {
-              display: true,
-            },
           },
-        ],
-        yAxes: [
-          {
+        }, ],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
             display: true,
-            scaleLabel: {
-              display: true,
-            },
           },
-        ],
+        }, ],
       },
     },
   });
@@ -91,29 +97,27 @@ function populateChart(data) {
     type: 'bar',
     data: {
       labels,
-      datasets: [
-        {
-          label: 'Pounds',
-          data: pounds,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-          ],
-          borderWidth: 1,
-        },
-      ],
+      datasets: [{
+        label: 'Pounds',
+        data: pounds,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      }, ],
     },
     options: {
       title: {
@@ -121,13 +125,11 @@ function populateChart(data) {
         text: 'Pounds Lifted',
       },
       scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
           },
-        ],
+        }, ],
       },
     },
   });
@@ -136,18 +138,17 @@ function populateChart(data) {
     type: 'pie',
     data: {
       labels: workouts,
-      datasets: [
-        {
-          label: 'Exercises Performed',
-          backgroundColor: colors,
-          data: durations,
-        },
-      ],
+      datasets: [{
+        label: 'Exercises Performed',
+        backgroundColor: colors,
+        //          data: indD
+        data: durations,
+      }, ],
     },
     options: {
       title: {
         display: true,
-        text: 'Exercises Performed',
+        text: 'Exercises Performed - Duration',
       },
     },
   });
@@ -156,28 +157,64 @@ function populateChart(data) {
     type: 'doughnut',
     data: {
       labels: workouts,
-      datasets: [
-        {
-          label: 'Exercises Performed',
-          backgroundColor: colors,
-          data: pounds,
-        },
-      ],
+      datasets: [{
+        label: 'Exercises Performed',
+        backgroundColor: colors,
+        data: indW,
+        //          data: pounds,
+      }, ],
     },
     options: {
       title: {
         display: true,
-        text: 'Exercises Performed',
+        text: 'Exercises Performed - Weight',
       },
     },
   });
+}
+
+
+
+function individualDurations(data) {
+  let durations = [];
+
+  data.forEach((workout) => {
+    workout.exercises.forEach((exercise) => {
+      durations.push(exercise.duration);
+    });
+  });
+
+  return durations;
+}
+
+function calculateIndivWeight(data, names) {
+  let total = [];
+
+  var newname;
+  names.forEach((exname) => {
+    var sum = 0;
+    newname = exname;
+    data.forEach((workout) => {
+      workout.exercises.forEach((exercise) => {
+        if (newname == exercise.name) {
+          sum = sum + exercise.weight;
+        }
+      })
+    })
+    total.push(sum);
+  })
+
+  return total;
 }
 
 function calculateTotalWeight(data) {
   let totals = [];
 
   data.forEach((workout) => {
-    const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
+    const workoutTotal = workout.exercises.reduce((total, {
+      type,
+      weight
+    }) => {
       if (type === 'resistance') {
         return total + weight;
       } else {

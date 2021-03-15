@@ -21,9 +21,8 @@ async function initExercise() {
   let workout;
 
   if (location.search.split("=")[1] === undefined) {
-    console.log("before createWorkout")
     workout = await API.createWorkout()
-    console.log(workout)
+    console.log(workout);
   }
   if (workout) {
     location.search = "?id=" + workout._id;
@@ -91,10 +90,6 @@ function validateInputs() {
     completeButton.removeAttribute("disabled");
     addButton.removeAttribute("disabled");
   } else {
-    console.log("isValid = " + isValid);
-    console.log(cardioNameInput.value);
-    console.log(durationInput);
-    console.log(distanceInput);
     completeButton.setAttribute("disabled", true);
     addButton.setAttribute("disabled", true);
   }
@@ -148,7 +143,12 @@ if (workoutTypeSelect) {
 if (completeButton) {
   completeButton.addEventListener("click", function (event) {
     shouldNavigateAway = true;
-    handleFormSubmit(event);
+    // added the toast to cause page to go back to index page
+    toast.classList.add("success");
+    //the following was removed because it was causing an empty record
+    // to be written to db due to Add exercise button clearing input fields
+    // so unless user added info again, the button did create exercise
+//    handleFormSubmit(event);
   });
 }
 if (addButton) {
