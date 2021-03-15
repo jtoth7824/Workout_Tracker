@@ -22,20 +22,12 @@ function generatePalette() {
 }
 
 function populateChart(data) {
-  console.log(data);
-  let durations = data.map(({
-    totalDuration
-  }) => totalDuration);
-  console.log(durations);
+  let durations = data.map(({totalDuration}) => totalDuration);
   let pounds = calculateTotalWeight(data);
-  console.log("pounds = " + pounds);
   let workouts = workoutNames(data);
-  console.log("workouts = " + workouts);
   const colors = generatePalette();
   let indD = individualDurations(data, workouts);
   let indW = calculateIndivWeight(data, workouts);
-  console.log("indD = " + indD);
-  console.log("indW = " + indW);
 
   let line = document.querySelector('#canvas').getContext('2d');
   let bar = document.querySelector('#canvas2').getContext('2d');
@@ -177,11 +169,6 @@ function populateChart(data) {
 
 function individualDurations(data, names) {
   let durations = [];
-
-  // data.forEach((workout) => {
-  //   workout.exercises.forEach((exercise) => {
-  //     durations.push(exercise.duration);
-  //   });
 
   var newname;
   names.forEach((exname) => {
