@@ -68,7 +68,7 @@ Followed by entering localhost:3000 in your browser URL line.
 
 ## Repository
 
-Direct link to repository:  https://github.com/jtoth7824/
+Direct link to repository:  https://github.com/jtoth7824/workout_tracker
 
 ## Deployment
 
