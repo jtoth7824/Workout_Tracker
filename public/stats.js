@@ -32,7 +32,7 @@ function populateChart(data) {
   let workouts = workoutNames(data);
   console.log("workouts = " + workouts);
   const colors = generatePalette();
-  let indD = individualDurations(data);
+  let indD = individualDurations(data, workouts);
   let indW = calculateIndivWeight(data, workouts);
   console.log("indD = " + indD);
   console.log("indW = " + indW);
@@ -141,8 +141,8 @@ function populateChart(data) {
       datasets: [{
         label: 'Exercises Performed',
         backgroundColor: colors,
-        //          data: indD
-        data: durations,
+        data: indD
+//        data: durations,
       }, ],
     },
     options: {
@@ -175,16 +175,29 @@ function populateChart(data) {
 
 
 
-function individualDurations(data) {
+function individualDurations(data, names) {
   let durations = [];
 
-  data.forEach((workout) => {
-    workout.exercises.forEach((exercise) => {
-      durations.push(exercise.duration);
-    });
-  });
+  // data.forEach((workout) => {
+  //   workout.exercises.forEach((exercise) => {
+  //     durations.push(exercise.duration);
+  //   });
 
-  return durations;
+  var newname;
+  names.forEach((exname) => {
+    var sum = 0;
+    newname = exname;
+    data.forEach((workout) => {
+      workout.exercises.forEach((exercise) => {
+        if (newname == exercise.name) {
+          sum = sum + exercise.duration;
+        }
+      })
+    })
+    durations.push(sum);
+  })
+
+return durations;
 }
 
 function calculateIndivWeight(data, names) {
