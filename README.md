@@ -23,21 +23,21 @@ This application utilizes a no-sql database on the back end through the use of m
 The following is a screenshot of the Workout Tracker home page.
 
 <p align="center">
-  <img src="./public/assets/WorkoutTrackerHomePage.png" alt="Workout Tracker application home screen">
+  <img src="./assets/images/WorkoutTrackerHomePage.png" alt="Workout Tracker application home screen">
 </p>
 
 #### Add Exercise
 The following is a screenshot of the Add Exercise page.
 
 <p align="center">
-  <img src="./public/assets/AddExercise.png" alt="workout tracker application add exercise screen">
+  <img src="./assets/images/AddExercise.png" alt="workout tracker application add exercise screen">
 </p>
 
 #### Stats
 The following is a screenshot of the Stats page.
 
 <p align="center">
-  <img src="./public/assets/Stats.png" alt="Workout tracker application stats screen">
+  <img src="./assets/images/Stats.png" alt="Workout tracker application stats screen">
 </p>
 
 ## Installation
