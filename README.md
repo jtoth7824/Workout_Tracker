@@ -37,7 +37,7 @@ The following is a screenshot of the Add Exercise page.
 The following is a screenshot of the Stats page.
 
 <p align="center">
-  <img src="./public/passets/images/Stats.png" alt="Workout tracker application stats screen">
+  <img src="./public/assets/images/Stats.png" alt="Workout tracker application stats screen">
 </p>
 
 ## Installation
