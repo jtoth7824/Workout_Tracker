@@ -25,9 +25,19 @@ app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to mongo db via mongoose
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true
-});
+//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+//  useNewUrlParser: true
+//});
+
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/workout',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
 
 // import the html routes
 require('./routes/html-routes.js')(app);
