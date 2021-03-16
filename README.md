@@ -75,4 +75,4 @@ Direct link to repository:  https://github.com/jtoth7824/workout_tracker
 
 The Workout Tracker application was deployed to Heroku so that anyone can run the application.   The link to execute the application is as follows:
 
-https://immense-coast-50151.herokuapp.com/
+https://desolate-anchorage-35501.herokuapp.com
